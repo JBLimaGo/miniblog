@@ -1,4 +1,4 @@
-## Projeto: MiniBlog(React Router, Hooks, Context, Firebse, Autenticação)
+## Projeto: MiniBlog(React Router, Hooks, Context, Firebase, Autenticação)
 
 
 
