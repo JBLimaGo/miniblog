@@ -17,6 +17,7 @@ const Register = () => {
             placeholder="Nome de usuário"
           />
         </label>
+        <p></p>
         <label>
           <span>E-mail:</span>
           <input
@@ -26,6 +27,7 @@ const Register = () => {
             placeholder="E-mail do usuário"
           />
         </label>
+        <p></p>
         <label>
           <span>Senha:</span>
           <input
@@ -35,6 +37,7 @@ const Register = () => {
             placeholder="Insira sua senha"
           />
         </label>
+        <p></p>
         <label>
           <span>Confirmação de Senha:</span>
           <input
@@ -44,6 +47,7 @@ const Register = () => {
             placeholder="Confirme a sua senha"
           />
         </label>
+        <p></p>
         <button className="btn">Registrar</button>
       </form>
     </div>
