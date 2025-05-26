@@ -1,0 +1,8 @@
+## Extensão para auto complete -
+
+rafce nas classes de JavaScript
+
+ES7+ React/Redux/React-Native snippets 
+
+## Instalar pacote chamado npm i react-router-dom 
+Dentro da pasta do projeto
