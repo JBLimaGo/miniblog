@@ -2,6 +2,14 @@ import "./App.css";
 import "./firebase/config";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+
+// hooks
+import { useState, useEffect } from "react";
+import { useAuthentication } from "./hooks/useAuthentication";
+
+// Context
+import { AuthProvider } from "./context/AuthContext";
 
 // Pages
 import Home from "./pages/Home/Home";
@@ -12,20 +20,46 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 
 function App() {
+
+  const [user, setUser] = useState(undefined);
+  const { auth } = useAuthentication();
+
+  const loadingUser = user === undefined;
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      if (user) {
+        console.log("Usuário autenticado:", user);
+      } 
+      else {
+        console.log("Usuário não autenticado");
+      }
+    }
+    );
+    return () => unsubscribe();
+  }, [auth]);
+
+  if (loadingUser) {
+    return <div className="loading">Carregando...</div>;
+  }
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <Navbar />
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
-        </div>
-        <Footer />
-      </BrowserRouter>
+      <AuthProvider value={{ user }}>
+        <BrowserRouter>
+          <Navbar />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Routes>
+          </div>
+          <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
