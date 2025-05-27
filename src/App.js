@@ -1,4 +1,5 @@
 import "./App.css";
+import "./firebase/config";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -9,7 +10,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
-
 
 function App() {
   return (
