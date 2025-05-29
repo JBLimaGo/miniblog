@@ -65,6 +65,41 @@ export const useAuthentication = () => {
     signOut(auth);
   };
 
+  // Login - sign in
+  const login = async (data) => {
+    checkIfIsCancelled();
+
+    setLoading(true);
+    setError(false);
+
+    try {
+      await signInWithEmailAndPassword(auth, data.email, data.password);
+      setLoading(false);
+    } catch (error) {
+      let systemErrorMessage;
+
+      switch (error.code) {
+        case "auth/user-not-found":
+        case "auth/invalid-email":
+          systemErrorMessage = "Usuário não encontrado.";
+          break;
+        case "auth/wrong-password":
+        case "auth/invalid-credential":
+          systemErrorMessage = "Senha incorreta.";
+          break;
+        case "auth/too-many-requests":
+          systemErrorMessage = "Muitas tentativas. Tente novamente mais tarde.";
+          break;
+        default:
+          systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
+          console.log("Código de erro:", error.code);
+      }
+
+      setError(systemErrorMessage);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     return () => setCancelled(true);
   }, []);
@@ -75,5 +110,6 @@ export const useAuthentication = () => {
     error,
     loading,
     logout,
+    login,
   };
 };
