@@ -20,6 +20,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import backgroundImage from './assets/imagen.jpg';
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -44,7 +45,14 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App" style={{ 
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      minHeight: '100vh',
+      position: 'relative'
+     }}>
       <AuthProvider value={{ user }}>
         <BrowserRouter>
           <Navbar />
@@ -74,7 +82,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </AuthProvider>
-    </div>
+    </div> 
   );
 }
 

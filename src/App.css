@@ -1,5 +1,34 @@
-.container{
+.container {
   min-height: 60vh;  
   margin-bottom: 5em;  
+  color: #000000;
+}
+
+.App {
+  background-image: url('./assets/imagen.jpg');
+  background-size: cover;  
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative; 
+  color: #000000;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  color: #000000; 
+}
+
+.background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* ajuste a opacidade aqui */
 }
 
