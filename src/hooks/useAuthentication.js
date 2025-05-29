@@ -88,7 +88,8 @@ export const useAuthentication = () => {
           systemErrorMessage = "Senha incorreta.";
           break;
         case "auth/too-many-requests":
-          systemErrorMessage = "Muitas tentativas. Tente novamente mais tarde.";
+          systemErrorMessage =
+            "Muitas tentativas ao servidor. Tente novamente mais tarde.";
           break;
         default:
           systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
