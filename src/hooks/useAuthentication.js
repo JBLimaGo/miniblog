@@ -78,22 +78,25 @@ export const useAuthentication = () => {
     } catch (error) {
       let systemErrorMessage;
 
+      // Adiciona log para debug
+      console.log("Código de erro recebido:", error.code);
+
       switch (error.code) {
         case "auth/user-not-found":
+        case "auth/invalid-login-credentials": // Adiciona este novo código
         case "auth/invalid-email":
-          systemErrorMessage = "Usuário não encontrado.";
-          break;
+        case "auth/too-many-requests":
         case "auth/wrong-password":
         case "auth/invalid-credential":
-          systemErrorMessage = "Senha incorreta.";
+          systemErrorMessage = "Usuário ou senha incorreta.";
           break;
-        case "auth/too-many-requests":
-          systemErrorMessage =
-            "Muitas tentativas ao servidor. Tente novamente mais tarde.";
-          break;
+        // case "auth/wrong-password":
+        // case "auth/invalid-credential": // Mantém o código existente
+        //   systemErrorMessage = "Senha incorreta.";
+        //    break;
         default:
           systemErrorMessage = "Ocorreu um erro, por favor tente mais tarde.";
-          console.log("Código de erro:", error.code);
+          console.log("Erro não tratado:", error.code);
       }
 
       setError(systemErrorMessage);
