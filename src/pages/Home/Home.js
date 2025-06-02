@@ -17,7 +17,10 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/search?q=${query}`);
+
+    if (query) {
+      navigate(`/search?q=${query}`);
+    }
   };
 
   return (

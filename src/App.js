@@ -20,7 +20,8 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import CreatePost from "./pages/CreatePost/CreatePost";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import backgroundImage from './assets/imagen.jpg';
+import backgroundImage from "./assets/imagen.jpg";
+import Search from "./pages/Search/Search";
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -45,14 +46,17 @@ function App() {
   }
 
   return (
-    <div className="App" style={{ 
-      backgroundImage: `url(${backgroundImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      minHeight: '100vh',
-      position: 'relative'
-     }}>
+    <div
+      className="App"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        position: "relative",
+      }}
+    >
       <AuthProvider value={{ user }}>
         <BrowserRouter>
           <Navbar />
@@ -60,6 +64,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/search" element={<Search />} />
               <Route
                 path="/login"
                 element={!user ? <Login /> : <Navigate to="/" />}
@@ -82,7 +87,7 @@ function App() {
           <Footer />
         </BrowserRouter>
       </AuthProvider>
-    </div> 
+    </div>
   );
 }
 
