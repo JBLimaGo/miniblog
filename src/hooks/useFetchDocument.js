@@ -27,13 +27,11 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
       try {
         let q;
 
-        if (search) {
-          q = await query(
-            collectionRef,
-            where("tags", "array-contains", search),
-            orderBy("createdAt", "desc")
-          );
+        // Busca sem filtro
+        if (!search) {
+          q = await query(collectionRef, orderBy("createdAt", "desc"));
         } else {
+          // Busca com filtro
           q = await query(collectionRef, orderBy("createdAt", "desc"));
         }
 
@@ -44,9 +42,14 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
             results.push({ id: doc.id, ...doc.data() });
           });
 
+          // Se houver termo de busca, filtra por título ou tags
           if (search) {
-            results = results.filter((document) =>
-              document.title.toLowerCase().includes(search.toLowerCase())
+            results = results.filter(
+              (document) =>
+                document.title.toLowerCase().includes(search.toLowerCase()) ||
+                document.tags.some((tag) =>
+                  tag.toLowerCase().includes(search.toLowerCase())
+                )
             );
           }
 
@@ -65,7 +68,7 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
     }
 
     loadData();
-  }, [docCollection, search]);
+  }, [docCollection, search, cancelled]);
 
   useEffect(() => {
     return () => {
