@@ -68,7 +68,7 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
     }
 
     loadData();
-  }, [docCollection, search, cancelled]);
+  }, [docCollection, documents, search, cancelled]);
 
   useEffect(() => {
     return () => {
