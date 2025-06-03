@@ -1,5 +1,6 @@
 import { useState, useEffect, use } from "react";
 import { db } from "../firebase/config";
+
 import {
   collection,
   query,
@@ -30,6 +31,8 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
         // Busca sem filtro
         if (!search) {
           q = await query(collectionRef, orderBy("createdAt", "desc"));
+        } else if (uid) {
+          q = await query("uid", "==", uid, orderBy("createdAt", "desc"));  
         } else {
           // Busca com filtro
           q = await query(collectionRef, orderBy("createdAt", "desc"));
@@ -68,7 +71,7 @@ export const useFetchDocument = (docCollection, search = null, uid = null) => {
     }
 
     loadData();
-  }, [docCollection, documents, search, cancelled]);
+  }, [docCollection, search, cancelled]);
 
   useEffect(() => {
     return () => {
