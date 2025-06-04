@@ -32,7 +32,7 @@ export const useFetchDocuments = (docCollection, id) => {
         
         setLoading(true);
       }     
-    }
+    }      
 
     loadDocuments();
   }, [docCollection,id, cancelled]);
