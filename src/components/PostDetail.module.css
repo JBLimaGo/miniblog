@@ -4,6 +4,7 @@
 
 .post_detail img {
   max-width: 600px;
+ 
 }
 
 .post_detail h2 {
@@ -12,7 +13,7 @@
 
 .post_detail .tags {
   margin-bottom: 1.2em;
-  display: flex;
+  display: flex; 
 }
 
 .tags p {
@@ -28,4 +29,12 @@
   color: #444;
   font-size: 0.8em;
   margin-bottom: 1em;
+}
+
+.post_image {
+  max-width: 100%; /* Garante que a imagem não ultrapasse o container */
+  width: 700px; /* Define a largura desejada */
+  height: auto; /* Mantém a proporção da imagem */
+  border-radius: 8px; /* (Opcional) Adiciona bordas arredondadas */
+  object-fit: cover; /* Ajusta o conteúdo da imagem para caber no tamanho definido */
 }
