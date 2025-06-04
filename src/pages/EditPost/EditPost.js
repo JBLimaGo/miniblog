@@ -1,4 +1,4 @@
-import style from "./EditPost.module.css";
+import styles from "./EditPost.module.css"; 
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
@@ -17,18 +17,21 @@ const EditPost = () => {
   const [formError, setFormError] = useState("");
 
   useEffect(() => {
-    console.log("ID do post:", id); // Para debug
+    // console.log("ID do post:", id); // Para debug
 
-    console.log("post:", post);
-
-    if (post) {
-      setTitle(post.title);
-      setBody(post.body);
-      setImage(post.image);
-      const textTags = post.tagsArray.join(", "); // Corrigido: era post.tagsArray
-      setTags(textTags);
+    try {
+      if (post) {
+        setTitle(post.title);
+        setBody(post.body);
+        setImage(post.image);
+        const textTags = post.tags.join(", ");
+        setTags(textTags);
+      }
+    } catch (error) {
+      setFormError("Erro ao carregar o post.");
+      console.error("Erro ao carregar dados do post:", error);
     }
-  }, [post]);
+  }, [post, id]);
 
   const { user } = useAuthValue();
   const { updateDocument, response } = useUpdateDocument("posts"); // Corrigido
@@ -59,17 +62,20 @@ const EditPost = () => {
       image,
       body,
       tags: tagsArray,
-      uid: user.uid, // Corrigido: era user.displayName
+      uid: user.uid,
     };
 
-    updateDocument(id, data); // Usando updateDocument ao invés de insertDocument
-
-    // Redirect user to dashboard após atualização
-    navigate("/dashboard");
+    try {
+      updateDocument(id, data);
+      navigate("/dashboard");
+    } catch (error) {
+      setFormError("Erro ao atualizar o post.");
+      console.error("Erro na atualização:", error);
+    }
   };
 
   return (
-    <div className={style.edit_post}>
+    <div className={styles.edit_post}>
       {post && (
         <>
           <h2>Editando Post: {post.title}</h2>
@@ -98,9 +104,9 @@ const EditPost = () => {
                 value={image}
               />
             </label>
-            <p className={style.preview_title}> Preview da imagem atual:</p>
+            <p className={styles.preview_title}> Preview da imagem atual:</p>
             <img
-              className={style.image_preview}
+              className={styles.image_preview}
               src={post.image}
               alt={post.title}
             />
@@ -125,7 +131,7 @@ const EditPost = () => {
                 value={tags}
               />
             </label>
-            {!response.loading && <button className="btn">Cadastrar</button>}
+            {!response.loading && <button className="btn">Editar</button>}
             {response.loading && (
               <button className="btn" disabled>
                 Aguarde...
