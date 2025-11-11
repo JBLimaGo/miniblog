@@ -2,13 +2,13 @@ import styles from "./EditPost.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthValue } from "../../context/AuthContext";
-import { useFetchDocument } from "../../hooks/useFetchDocument";
 import useUpdateDocument from "../../hooks/useUpdateDocument";
+import { useFetchDocuments } from "../../hooks/UseFetchDocuments";
 
 const EditPost = () => {
   const { id } = useParams();
-
-  const { document: post } = useFetchDocument("posts", id);
+ 
+  const { documents: post } = useFetchDocuments("posts", id);
 
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
@@ -17,24 +17,18 @@ const EditPost = () => {
   const [formError, setFormError] = useState("");
 
   useEffect(() => {
-    // console.log("ID do post:", id); // Para debug
-
-    try {
-      if (post) {
-        setTitle(post.title);
-        setBody(post.body);
-        setImage(post.image);
-        const textTags = post.tags.join(", ");
-        setTags(textTags);
-      }
-    } catch (error) {
-      setFormError("Erro ao carregar o post.");
-      console.error("Erro ao carregar dados do post:", error);
+   // console.log("Post carregado:", post); // Verifique o conteúdo do post
+    if (post) {
+      setTitle(post.title);
+      setBody(post.body);
+      setImage(post.image);
+      const textTags = post.tags.join(", ");
+      setTags(textTags);
     }
   }, [post, id]);
 
   const { user } = useAuthValue();
-  const { updateDocument, response } = useUpdateDocument("posts"); // Corrigido
+  const { updateDocument, response } = useUpdateDocument("posts"); 
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -45,7 +39,7 @@ const EditPost = () => {
       new URL(image);
     } catch (error) {
       setFormError("A imagem precisa ser uma URL.");
-      return; // Adicionado return para parar execução
+      return; 
     }
 
     // Converter string de tags em array
@@ -53,9 +47,9 @@ const EditPost = () => {
 
     if (!title || !image || !tags || !body) {
       setFormError("Por favor, preencha todos os campos.");
-      return; // Adicionado return
+     // return; // Adicionado return
     }
-
+   
     // Update post
     const data = {
       title,
@@ -63,6 +57,7 @@ const EditPost = () => {
       body,
       tags: tagsArray,
       uid: user.uid,
+      createdBy: user.displayName,
     };
 
     try {

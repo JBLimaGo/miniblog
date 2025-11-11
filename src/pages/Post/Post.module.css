@@ -3,7 +3,7 @@
 }
 
 .post_container h3 {
-    margin-bottom: .2em;
+    margin-bottom: .2em;    
 }
 
 .post_container .tags {
@@ -18,3 +18,11 @@
 .tags span {
     font-weight: bold;
 }
+
+.post_image {
+    max-width: 100%; /* Garante que a imagem não ultrapasse o container */
+    width: 700px; /* Define a largura desejada */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 8px; /* (Opcional) Adiciona bordas arredondadas */
+    object-fit: cover; /* Ajusta o conteúdo da imagem para caber no tamanho definido */
+  }
